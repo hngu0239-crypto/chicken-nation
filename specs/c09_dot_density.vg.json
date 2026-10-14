@@ -1,0 +1,138 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Chart 9 (dot density map, map 3). Each dot = $5 million of chicken meat or egg production in 2020-21, placed at a random position inside its SA4 region. Click the legend to show one product.",
+  "width": "container",
+  "height": 400,
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [
+      -18,
+      -36
+    ],
+    "rotate": [
+      -133,
+      0,
+      0
+    ]
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/states.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#E3E8E0",
+        "stroke": "white",
+        "strokeWidth": 1
+      }
+    },
+    {
+      "data": {
+        "url": "data/c09_poultry_dots.csv"
+      },
+      "params": [
+        {
+          "name": "pick",
+          "select": {
+            "type": "point",
+            "fields": [
+              "type"
+            ]
+          },
+          "bind": "legend"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "size": 13
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "type",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Chicken meat",
+              "Eggs"
+            ],
+            "range": [
+              "#E0951A",
+              "#3F7FA6"
+            ]
+          },
+          "legend": {
+            "title": "1 dot = $5 million",
+            "orient": "top-left",
+            "symbolSize": 110,
+            "labelFontSize": 12
+          }
+        },
+        "opacity": {
+          "condition": {
+            "param": "pick",
+            "value": 0.85
+          },
+          "value": 0.06
+        },
+        "tooltip": [
+          {
+            "field": "region",
+            "title": "Region"
+          },
+          {
+            "field": "type",
+            "title": "Product"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "lon": 124,
+            "lat": -23.5,
+            "t": "SA and WA chicken meat is not published,"
+          },
+          {
+            "lon": 124,
+            "lat": -25.2,
+            "t": "so only their egg farms appear"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontStyle": "italic",
+        "color": "#5A635D"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "lon",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "lat",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "t"
+        }
+      }
+    }
+  ]
+}

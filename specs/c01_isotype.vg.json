@@ -1,0 +1,177 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Chart 1 (Isotype). Apparent meat consumption per person in Australia, 2024-25. One icon = 2 kg, rounded to the nearest whole icon; the exact value is printed at the end of each row.",
+  "width": "container",
+  "height": 260,
+  "data": {
+    "url": "data/c01_c02_consumption.csv"
+  },
+  "transform": [
+    {
+      "filter": "datum.year == '2024-25'"
+    },
+    {
+      "calculate": "{'Chicken': '🐔', 'Pig meat': '🐖', 'Beef & veal': '🐄', 'Sheep meat': '🐑'}[datum.meat]",
+      "as": "icon"
+    },
+    {
+      "calculate": "{'Chicken': 'Chicken', 'Pig meat': 'Pork', 'Beef & veal': 'Beef', 'Sheep meat': 'Lamb & mutton'}[datum.meat]",
+      "as": "label"
+    },
+    {
+      "calculate": "round(datum.kg / 2)",
+      "as": "n_icons"
+    },
+    {
+      "calculate": "sequence(1, datum.n_icons + 1)",
+      "as": "slot"
+    },
+    {
+      "flatten": [
+        "slot"
+      ]
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "label",
+      "type": "nominal",
+      "sort": [
+        "Chicken",
+        "Pork",
+        "Beef",
+        "Lamb & mutton"
+      ],
+      "axis": {
+        "title": null,
+        "domain": false,
+        "ticks": false,
+        "labelFontSize": 14,
+        "labelPadding": 12,
+        "labelFontWeight": {
+          "expr": "datum.value == 'Chicken' ? 700 : 400"
+        }
+      }
+    },
+    "x": {
+      "field": "slot",
+      "type": "quantitative",
+      "scale": {
+        "domain": [
+          0.5,
+          33
+        ]
+      },
+      "axis": null
+    }
+  },
+  "layer": [
+    {
+      "description": "The icons. Non-chicken rows are faded so chicken stands out (figure-ground).",
+      "mark": {
+        "type": "text",
+        "baseline": "middle",
+        "fontSize": {
+          "expr": "clamp(width / 44, 7, 24)"
+        }
+      },
+      "encoding": {
+        "text": {
+          "field": "icon"
+        },
+        "opacity": {
+          "condition": {
+            "test": "datum.meat == 'Chicken'",
+            "value": 1
+          },
+          "value": 0.4
+        },
+        "tooltip": [
+          {
+            "field": "label",
+            "title": "Meat"
+          },
+          {
+            "field": "kg",
+            "title": "kg per person per year",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+    {
+      "description": "Exact value at the end of each row.",
+      "transform": [
+        {
+          "filter": "datum.slot == datum.n_icons"
+        },
+        {
+          "calculate": "datum.slot + 0.9",
+          "as": "label_x"
+        },
+        {
+          "calculate": "format(datum.kg, '.1f') + ' kg'",
+          "as": "value_text"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "fontSize": 15,
+        "fontWeight": 700
+      },
+      "encoding": {
+        "x": {
+          "field": "label_x",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "value_text"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.meat == 'Chicken'",
+            "value": "#965700"
+          },
+          "value": "#6B746E"
+        }
+      }
+    },
+    {
+      "description": "Annotation under the chicken row.",
+      "data": {
+        "values": [
+          {
+            "label": "Chicken",
+            "x": 0.6,
+            "note": "More than pork and beef put together (47.3 kg)"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "top",
+        "dy": 16,
+        "fontSize": 12,
+        "fontStyle": "italic",
+        "color": "#965700"
+      },
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "note"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null
+    }
+  }
+}

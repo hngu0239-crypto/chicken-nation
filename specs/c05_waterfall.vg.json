@@ -1,0 +1,232 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Chart 5 (waterfall). How much each sector added to (or took from) total livestock value between 2020-21 and 2024-25. Bars start where the previous bar ended; the last bar is the net change. Nominal dollars (not adjusted for inflation).",
+  "width": "container",
+  "height": 340,
+  "data": {
+    "url": "data/c05_waterfall.csv"
+  },
+  "transform": [
+    {
+      "filter": "datum.label != 'Total 2020-21'"
+    },
+    {
+      "calculate": "toNumber(datum.order)",
+      "as": "order_n"
+    },
+    {
+      "calculate": "toNumber(datum.change_m) / 1000",
+      "as": "change_b"
+    },
+    {
+      "calculate": "27.8248",
+      "as": "base_b"
+    },
+    {
+      "calculate": "datum.kind == 'total' ? 0 : toNumber(datum.start) / 1000 - datum.base_b",
+      "as": "from_b"
+    },
+    {
+      "calculate": "toNumber(datum.end) / 1000 - datum.base_b",
+      "as": "to_b"
+    },
+    {
+      "calculate": "datum.kind == 'total' ? 'Net change' : datum.label",
+      "as": "bar"
+    },
+    {
+      "calculate": "datum.label == 'Poultry (meat)' ? 'Poultry' : datum.kind",
+      "as": "colour_group"
+    },
+    {
+      "calculate": "(datum.to_b - datum.from_b >= 0 ? '+' : '−') + format(abs(datum.to_b - datum.from_b), '$.2f') + 'b'",
+      "as": "bar_label"
+    },
+    {
+      "calculate": "max(datum.from_b, datum.to_b)",
+      "as": "top_b"
+    },
+    {
+      "window": [
+        {
+          "op": "lead",
+          "field": "bar",
+          "as": "next_bar"
+        }
+      ],
+      "sort": [
+        {
+          "field": "order_n",
+          "order": "ascending"
+        }
+      ]
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "bar",
+      "type": "ordinal",
+      "sort": {
+        "field": "order_n"
+      },
+      "axis": {
+        "title": null,
+        "labelAngle": 0,
+        "labelLimit": 120,
+        "domain": false,
+        "ticks": false,
+        "labelPadding": 8,
+        "labelFontWeight": {
+          "expr": "datum.value == 'Poultry (meat)' || datum.value == 'Net change' ? 700 : 400"
+        }
+      }
+    }
+  },
+  "layer": [
+    {
+      "transform": [
+        {
+          "filter": "datum.next_bar != null"
+        }
+      ],
+      "mark": {
+        "type": "rule",
+        "color": "#8D958F",
+        "strokeDash": [
+          3,
+          3
+        ]
+      },
+      "encoding": {
+        "x2": {
+          "field": "next_bar"
+        },
+        "y": {
+          "field": "to_b",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "bar",
+        "width": {
+          "band": 0.62
+        },
+        "cornerRadius": 2
+      },
+      "encoding": {
+        "y": {
+          "field": "from_b",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              10
+            ]
+          },
+          "axis": {
+            "title": "Change since 2020–21, $ billion",
+            "titleAngle": 0,
+            "titleAlign": "left",
+            "titleY": -12,
+            "titleX": 0,
+            "format": "$,.0f",
+            "tickCount": 5,
+            "domain": false,
+            "ticks": false
+          }
+        },
+        "y2": {
+          "field": "to_b"
+        },
+        "color": {
+          "field": "colour_group",
+          "type": "nominal",
+          "legend": null,
+          "scale": {
+            "domain": [
+              "total",
+              "increase",
+              "Poultry",
+              "decrease"
+            ],
+            "range": [
+              "#4A544E",
+              "#A9B7A2",
+              "#E0951A",
+              "#7FA3BF"
+            ]
+          }
+        },
+        "tooltip": [
+          {
+            "field": "bar",
+            "title": "Sector"
+          },
+          {
+            "field": "bar_label",
+            "title": "Change"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dy": -9,
+        "fontSize": 12,
+        "fontWeight": 700
+      },
+      "encoding": {
+        "y": {
+          "field": "top_b",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "bar_label"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.label == 'Poultry (meat)'",
+            "value": "#965700"
+          },
+          "value": "#1E2621"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "bar": "Net change",
+            "y": 10,
+            "t": "Total: $27.8b → $36.4b"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": 30,
+        "dy": 4,
+        "fontSize": 11,
+        "fontStyle": "italic",
+        "color": "#535C56"
+      },
+      "encoding": {
+        "x": {
+          "field": "bar",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "y",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "t"
+        }
+      }
+    }
+  ]
+}

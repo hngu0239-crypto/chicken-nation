@@ -1,0 +1,274 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Chart 7 (choropleth map, map 1). Value of chicken meat or egg production per square kilometre in each SA4 region, 2020-21. A rate is used, not a total, so large regions do not look important just because they are large.",
+  "width": "container",
+  "height": 500,
+  "params": [
+    {
+      "name": "product",
+      "value": "Chicken meat",
+      "bind": {
+        "input": "radio",
+        "options": [
+          "Chicken meat",
+          "Eggs"
+        ],
+        "name": "Product  "
+      }
+    },
+    {
+      "name": "zoom",
+      "value": "Australia",
+      "bind": {
+        "input": "select",
+        "options": [
+          "Australia",
+          "Sydney",
+          "Melbourne",
+          "Brisbane"
+        ],
+        "name": "Zoom to  "
+      }
+    },
+    {
+      "name": "zlon",
+      "expr": "{'Australia': 134, 'Sydney': 150.9, 'Melbourne': 145.0, 'Brisbane': 152.8}[zoom]"
+    },
+    {
+      "name": "zlat",
+      "expr": "{'Australia': -27.5, 'Sydney': -33.8, 'Melbourne': -37.9, 'Brisbane': -27.4}[zoom]"
+    },
+    {
+      "name": "zscale",
+      "expr": "zoom == 'Australia' ? width * 1.05 : width * 8"
+    }
+  ],
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [
+      -18,
+      -36
+    ],
+    "rotate": {
+      "expr": "[-zlon, 0, 0]"
+    },
+    "center": {
+      "expr": "[0, zlat]"
+    },
+    "scale": {
+      "expr": "zscale"
+    },
+    "translate": {
+      "expr": "[width / 2, height / 2]"
+    }
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/c07_sa4_poultry.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "transform": [
+        {
+          "calculate": "product == 'Eggs' ? datum.properties.eggs_per_km2 : datum.properties.meat_per_km2",
+          "as": "density"
+        },
+        {
+          "calculate": "product == 'Eggs' ? datum.properties.eggs_m : datum.properties.meat_m",
+          "as": "value_m"
+        },
+        {
+          "calculate": "product == 'Eggs' ? datum.properties.eggs_status : datum.properties.meat_status",
+          "as": "status"
+        },
+        {
+          "calculate": "product == 'Eggs' ? datum.properties.eggs_note : datum.properties.meat_note",
+          "as": "note"
+        },
+        {
+          "calculate": "datum.density < 300 || datum.density == null ? 'Under $300' : datum.density < 1000 ? '$300–1,000' : datum.density < 5000 ? '$1,000–5,000' : datum.density < 20000 ? '$5,000–20,000' : '$20,000 or more'",
+          "as": "band"
+        },
+        {
+          "calculate": "datum.status == 'np' ? 'Not published (confidential)' : datum.status == 'none' ? 'No production recorded' : format(datum.value_m, '$,.1f') + ' million (' + format(datum.density, '$,.0f') + ' per km²)'",
+          "as": "tip"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "white",
+        "strokeWidth": 0.6
+      },
+      "encoding": {
+        "color": {
+          "condition": {
+            "test": "datum.status == 'np'",
+            "value": "#D3D6D2"
+          },
+          "field": "band",
+          "type": "ordinal",
+          "scale": {
+            "domain": [
+              "Under $300",
+              "$300–1,000",
+              "$1,000–5,000",
+              "$5,000–20,000",
+              "$20,000 or more"
+            ],
+            "range": [
+              {
+                "expr": "product == 'Eggs' ? '#EAF2F8' : '#FCEFD9'"
+              },
+              {
+                "expr": "product == 'Eggs' ? '#BCD5E8' : '#F7CF94'"
+              },
+              {
+                "expr": "product == 'Eggs' ? '#7FAED0' : '#EDA24A'"
+              },
+              {
+                "expr": "product == 'Eggs' ? '#3F7FA6' : '#C8700F'"
+              },
+              {
+                "expr": "product == 'Eggs' ? '#1C4A6B' : '#7E3F00'"
+              }
+            ]
+          },
+          "legend": {
+            "title": "$ of production per km²",
+            "orient": "bottom-left",
+            "symbolType": "square",
+            "symbolSize": 160,
+            "fillColor": "rgba(255,255,255,0.85)",
+            "padding": 8,
+            "labelFontSize": 11
+          }
+        },
+        "tooltip": [
+          {
+            "field": "properties.name",
+            "title": "Region"
+          },
+          {
+            "field": "properties.state",
+            "title": "State"
+          },
+          {
+            "field": "tip",
+            "title": "Value of production"
+          },
+          {
+            "field": "note",
+            "title": "ABS reliability"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/states.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": null,
+        "stroke": "#4A544E",
+        "strokeWidth": 0.8
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "city": "Sydney",
+            "lon": 151.21,
+            "lat": -33.87
+          },
+          {
+            "city": "Melbourne",
+            "lon": 144.96,
+            "lat": -37.81
+          },
+          {
+            "city": "Brisbane",
+            "lon": 153.03,
+            "lat": -27.47
+          },
+          {
+            "city": "Adelaide",
+            "lon": 138.6,
+            "lat": -34.93
+          },
+          {
+            "city": "Perth",
+            "lon": 115.86,
+            "lat": -31.95
+          },
+          {
+            "city": "Hobart",
+            "lon": 147.33,
+            "lat": -42.88
+          },
+          {
+            "city": "Darwin",
+            "lon": 130.84,
+            "lat": -12.46
+          },
+          {
+            "city": "Canberra",
+            "lon": 149.13,
+            "lat": -35.28
+          }
+        ]
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "circle",
+            "color": "#1E2621",
+            "size": 20
+          },
+          "encoding": {
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dx": 6,
+            "dy": -6,
+            "fontSize": 11,
+            "fontWeight": 700,
+            "color": "#1E2621"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "city"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

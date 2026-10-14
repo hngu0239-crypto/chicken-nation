@@ -1,0 +1,9 @@
+state,abbr,lon,lat,published,value_m
+New South Wales,NSW,146.9,-32.2,True,1154.9
+Victoria,Vic,144.3,-36.9,True,1045.8
+Queensland,Qld,144.5,-22.5,True,760.8
+South Australia,SA,135.5,-30.0,False,
+Western Australia,WA,121.5,-26.0,False,
+Tasmania,Tas,146.6,-42.0,False,
+Northern Territory,NT,133.4,-19.5,False,
+Australian Capital Territory,ACT,149.1,-35.3,True,1.7

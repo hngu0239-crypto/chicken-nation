@@ -1,0 +1,245 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Chart 3 (slope chart). Consumer Price Index for four meats and for all prices, re-based so that 1980-81 = 100. The end value shows how many times more expensive each item became by 2024-25.",
+  "width": "container",
+  "height": 380,
+  "data": {
+    "url": "data/c03_cpi_slope.csv"
+  },
+  "transform": [
+    {
+      "calculate": "datum.item == 'All prices (average)' ? 'reference' : (datum.item == 'Chicken' ? 'chicken' : 'other')",
+      "as": "role"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "scale": {
+        "padding": 0.8
+      },
+      "axis": {
+        "title": null,
+        "labelAngle": 0,
+        "orient": "top",
+        "domain": false,
+        "ticks": false,
+        "labelFontSize": 13,
+        "labelFontWeight": 700,
+        "labelColor": "#1E2621"
+      }
+    },
+    "y": {
+      "field": "index",
+      "type": "quantitative",
+      "scale": {
+        "domain": [
+          0,
+          600
+        ]
+      },
+      "axis": null
+    }
+  },
+  "layer": [
+    {
+      "description": "One line per item. Chicken in gold, the all-prices reference dashed, other meats grey.",
+      "mark": {
+        "type": "line",
+        "strokeCap": "round"
+      },
+      "encoding": {
+        "detail": {
+          "field": "item"
+        },
+        "color": {
+          "field": "role",
+          "type": "nominal",
+          "legend": null,
+          "scale": {
+            "domain": [
+              "chicken",
+              "reference",
+              "other"
+            ],
+            "range": [
+              "#E0951A",
+              "#1E2621",
+              "#B9C0BA"
+            ]
+          }
+        },
+        "strokeWidth": {
+          "condition": {
+            "test": "datum.role == 'chicken'",
+            "value": 4.5
+          },
+          "value": 2.5
+        },
+        "strokeDash": {
+          "condition": {
+            "test": "datum.role == 'reference'",
+            "value": [
+              5,
+              4
+            ]
+          },
+          "value": [
+            1,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "size": 110,
+        "opacity": 1
+      },
+      "encoding": {
+        "color": {
+          "field": "role",
+          "type": "nominal",
+          "legend": null,
+          "scale": {
+            "domain": [
+              "chicken",
+              "reference",
+              "other"
+            ],
+            "range": [
+              "#E0951A",
+              "#1E2621",
+              "#9AA39C"
+            ]
+          }
+        },
+        "tooltip": [
+          {
+            "field": "item",
+            "title": "Item"
+          },
+          {
+            "field": "year",
+            "title": "Year"
+          },
+          {
+            "field": "index",
+            "title": "Price index (1980–81 = 100)",
+            "format": ".0f"
+          },
+          {
+            "field": "times",
+            "title": "Times the 1980–81 price"
+          }
+        ]
+      }
+    },
+    {
+      "description": "Annotation: one shared label for the common starting point.",
+      "transform": [
+        {
+          "filter": "datum.year == '1980-81' && datum.role == 'chicken'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -12,
+        "fontSize": 12,
+        "color": "#5A635D"
+      },
+      "encoding": {
+        "text": {
+          "value": "All start at 100"
+        }
+      }
+    },
+    {
+      "description": "Annotation: end labels with the multiplier. Small nudges stop close labels from overlapping.",
+      "transform": [
+        {
+          "filter": "datum.year == '2024-25'"
+        },
+        {
+          "calculate": "datum.item + '  ×' + format(datum.times, '.1f')",
+          "as": "end_text"
+        },
+        {
+          "calculate": "datum.item == 'Lamb' ? toNumber(datum.index) + 12 : datum.item == 'Beef & veal' ? toNumber(datum.index) - 12 : toNumber(datum.index)",
+          "as": "label_y"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 12,
+        "fontSize": 13,
+        "fontWeight": 600
+      },
+      "encoding": {
+        "y": {
+          "field": "label_y",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "end_text"
+        },
+        "color": {
+          "field": "role",
+          "type": "nominal",
+          "legend": null,
+          "scale": {
+            "domain": [
+              "chicken",
+              "reference",
+              "other"
+            ],
+            "range": [
+              "#965700",
+              "#1E2621",
+              "#5A635D"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "description": "Annotation: the key message, under the chicken label.",
+      "data": {
+        "values": [
+          {
+            "year": "2024-25",
+            "index": 195,
+            "text": [
+              "Doubled, while average",
+              "prices rose five-fold"
+            ]
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "top",
+        "dx": 12,
+        "dy": 12,
+        "fontSize": 12,
+        "fontStyle": "italic",
+        "color": "#965700"
+      },
+      "encoding": {
+        "text": {
+          "field": "text"
+        }
+      }
+    }
+  ],
+  "resolve": {
+    "scale": {
+      "color": "independent"
+    }
+  }
+}

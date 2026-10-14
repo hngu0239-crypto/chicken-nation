@@ -1,0 +1,250 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Chart 6 (treemap, written in Vega because Vega-Lite has no treemap). Local value of six livestock sectors in 2024-25, grouped into animals sold and products. Rectangle area = dollars.",
+  "height": 340,
+  "padding": 0,
+  "autosize": {
+    "type": "fit-x",
+    "contains": "padding"
+  },
+  "signals": [
+    {
+      "name": "width",
+      "init": "isFinite(containerSize()[0]) ? containerSize()[0] : 600",
+      "on": [
+        {
+          "events": "window:resize",
+          "update": "isFinite(containerSize()[0]) ? containerSize()[0] : 600"
+        }
+      ]
+    }
+  ],
+  "data": [
+    {
+      "name": "sectors",
+      "url": "data/c06_treemap.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "value_m": "number",
+          "share_pct": "number"
+        }
+      }
+    },
+    {
+      "name": "tree",
+      "source": "sectors",
+      "transform": [
+        {
+          "type": "nest",
+          "keys": [
+            "group"
+          ],
+          "generate": true
+        },
+        {
+          "type": "treemap",
+          "field": "value_m",
+          "sort": {
+            "field": "value",
+            "order": "descending"
+          },
+          "round": true,
+          "method": "squarify",
+          "ratio": 1.4,
+          "paddingInner": 3,
+          "paddingOuter": 0,
+          "paddingTop": 22,
+          "size": [
+            {
+              "signal": "width"
+            },
+            {
+              "signal": "height"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "groups",
+      "source": "tree",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.depth == 1"
+        }
+      ]
+    },
+    {
+      "name": "leaves",
+      "source": "tree",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "!datum.children"
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "colour",
+      "type": "ordinal",
+      "domain": [
+        "Poultry (meat)",
+        "Cattle",
+        "Milk",
+        "Sheep & lambs",
+        "Wool",
+        "Pigs"
+      ],
+      "range": [
+        "#E0951A",
+        "#7A2E2E",
+        "#6F8FAF",
+        "#8C9A80",
+        "#B8A88A",
+        "#C98F98"
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "type": "text",
+      "from": {
+        "data": "groups"
+      },
+      "encode": {
+        "enter": {
+          "x": {
+            "field": "x0"
+          },
+          "y": {
+            "field": "y0",
+            "offset": 15
+          },
+          "text": {
+            "field": "key"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "fontWeight": {
+            "value": 700
+          },
+          "fill": {
+            "value": "#5A635D"
+          }
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "from": {
+        "data": "leaves"
+      },
+      "encode": {
+        "enter": {
+          "fill": {
+            "scale": "colour",
+            "field": "sector"
+          },
+          "stroke": {
+            "value": "white"
+          },
+          "strokeWidth": {
+            "value": 1
+          },
+          "tooltip": {
+            "signal": "{'Sector': datum.sector, 'Local value': format(datum.value_m, '$,.0f') + ' million', 'Share of total': datum.share_pct + '%'}"
+          }
+        },
+        "update": {
+          "x": {
+            "field": "x0"
+          },
+          "y": {
+            "field": "y0"
+          },
+          "x2": {
+            "field": "x1"
+          },
+          "y2": {
+            "field": "y1"
+          },
+          "opacity": {
+            "signal": "datum.sector == 'Poultry (meat)' ? 1 : 0.82"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "leaves"
+      },
+      "encode": {
+        "enter": {
+          "fill": {
+            "signal": "datum.sector == 'Wool' || datum.sector == 'Pigs' ? '#1E2621' : 'white'"
+          },
+          "fontWeight": {
+            "value": 700
+          },
+          "fontSize": {
+            "value": 13
+          },
+          "baseline": {
+            "value": "top"
+          }
+        },
+        "update": {
+          "x": {
+            "field": "x0",
+            "offset": 8
+          },
+          "y": {
+            "field": "y0",
+            "offset": 8
+          },
+          "text": {
+            "signal": "(datum.x1 - datum.x0) > 40 ? datum.sector : ''"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {
+        "data": "leaves"
+      },
+      "encode": {
+        "enter": {
+          "fill": {
+            "signal": "datum.sector == 'Wool' || datum.sector == 'Pigs' ? '#1E2621' : 'white'"
+          },
+          "fontSize": {
+            "value": 12
+          },
+          "baseline": {
+            "value": "top"
+          }
+        },
+        "update": {
+          "x": {
+            "field": "x0",
+            "offset": 8
+          },
+          "y": {
+            "field": "y0",
+            "offset": 26
+          },
+          "text": {
+            "signal": "(datum.x1 - datum.x0) > 70 && (datum.y1 - datum.y0) > 46 ? format(datum.value_m / 1000, '$.1f') + 'b, ' + datum.share_pct + '%' : ''"
+          }
+        }
+      }
+    }
+  ]
+}

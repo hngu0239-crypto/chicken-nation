@@ -1,0 +1,161 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Chart 12 (ranked lollipop). The 15 SA4 regions with the highest local value of poultry sold for meat, 2020-21. Hollow dots: the ABS marks the estimate as less reliable.",
+  "width": "container",
+  "height": 420,
+  "data": {
+    "url": "data/c12_sa4_ranking.csv"
+  },
+  "transform": [
+    {
+      "calculate": "toNumber(datum.meat_m)",
+      "as": "v"
+    },
+    {
+      "filter": "toNumber(datum.rank) <= 15"
+    },
+    {
+      "calculate": "{'New South Wales': 'NSW', 'Victoria': 'Vic', 'Queensland': 'Qld', 'Tasmania': 'Tas', 'Australian Capital Territory': 'ACT'}[datum.state]",
+      "as": "abbr"
+    },
+    {
+      "calculate": "datum.region + ' (' + datum.abbr + ')'",
+      "as": "name"
+    },
+    {
+      "calculate": "datum.note == null || datum.note == '' ? 'Reliable estimate' : 'ABS: ' + datum.note",
+      "as": "quality"
+    },
+    {
+      "calculate": "format(toNumber(datum.meat_m), '$,.0f') + 'm  ·  ' + datum.share_pct + '%'",
+      "as": "value_label"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "name",
+      "type": "nominal",
+      "sort": {
+        "field": "v",
+        "order": "descending"
+      },
+      "axis": {
+        "title": null,
+        "domain": false,
+        "ticks": false,
+        "labelLimit": 260,
+        "labelFontSize": 12
+      }
+    },
+    "x": {
+      "field": "meat_m",
+      "type": "quantitative",
+      "scale": {
+        "domain": [
+          0,
+          400
+        ]
+      },
+      "axis": {
+        "title": "Local value, $ million",
+        "grid": true,
+        "tickCount": 6,
+        "domain": false
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 2.5
+      },
+      "encoding": {
+        "x": {
+          "datum": 0
+        },
+        "x2": {
+          "field": "meat_m"
+        },
+        "color": {
+          "condition": {
+            "test": "toNumber(datum.rank) <= 3",
+            "value": "#E0951A"
+          },
+          "value": "#C9CFC8"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "size": 150,
+        "opacity": 1,
+        "strokeWidth": 2.5
+      },
+      "encoding": {
+        "stroke": {
+          "condition": {
+            "test": "toNumber(datum.rank) <= 3",
+            "value": "#E0951A"
+          },
+          "value": "#8D958F"
+        },
+        "fill": {
+          "condition": {
+            "test": "datum.quality != 'Reliable estimate'",
+            "value": "#FFFFFF"
+          },
+          "value": {
+            "expr": "toNumber(datum.rank) <= 3 ? '#E0951A' : '#8D958F'"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "region",
+            "title": "Region"
+          },
+          {
+            "field": "state",
+            "title": "State"
+          },
+          {
+            "field": "meat_m",
+            "type": "quantitative",
+            "title": "Local value ($ million)",
+            "format": ",.1f"
+          },
+          {
+            "field": "share_pct",
+            "type": "quantitative",
+            "title": "Share of published total (%)"
+          },
+          {
+            "field": "quality",
+            "title": "Reliability"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 12,
+        "fontSize": 12
+      },
+      "encoding": {
+        "text": {
+          "field": "value_label"
+        },
+        "color": {
+          "condition": {
+            "test": "toNumber(datum.rank) <= 3",
+            "value": "#965700"
+          },
+          "value": "#5A635D"
+        }
+      }
+    }
+  ]
+}

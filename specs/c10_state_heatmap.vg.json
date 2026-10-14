@@ -1,0 +1,129 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Chart 10 (heatmap). Chicken meat produced in each state and financial year (thousand tonnes). Blank cells: no published figure.",
+  "width": "container",
+  "height": 190,
+  "data": {
+    "url": "data/c10_state_meat_heatmap.csv"
+  },
+  "transform": [
+    {
+      "calculate": "{'New South Wales': 'NSW', 'Victoria': 'Vic', 'Queensland': 'Qld', 'South Australia': 'SA', 'Western Australia': 'WA'}[datum.state]",
+      "as": "abbr"
+    },
+    {
+      "calculate": "toNumber(datum.fy_end)",
+      "as": "year_end"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "year_end",
+      "type": "ordinal",
+      "scale": {
+        "domain": {
+          "expr": "sequence(1966, 2027)"
+        }
+      },
+      "axis": {
+        "title": null,
+        "labelAngle": 0,
+        "labelExpr": "datum.value % 10 == 0 ? datum.value : ''",
+        "ticks": false,
+        "domain": false
+      }
+    },
+    "y": {
+      "field": "abbr",
+      "type": "ordinal",
+      "sort": [
+        "NSW",
+        "Vic",
+        "Qld",
+        "SA",
+        "WA"
+      ],
+      "axis": {
+        "title": null,
+        "ticks": false,
+        "domain": false,
+        "labelFontWeight": 600
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "stroke": "white",
+        "strokeWidth": 0.6
+      },
+      "encoding": {
+        "color": {
+          "field": "kt",
+          "type": "quantitative",
+          "scale": {
+            "range": [
+              "#FBF0DC",
+              "#F1C16E",
+              "#E0951A",
+              "#B5600C",
+              "#6E3200"
+            ]
+          },
+          "legend": {
+            "title": "Thousand tonnes",
+            "orient": "bottom",
+            "direction": "horizontal",
+            "gradientLength": 240
+          }
+        },
+        "tooltip": [
+          {
+            "field": "state",
+            "title": "State"
+          },
+          {
+            "field": "fy",
+            "title": "Year"
+          },
+          {
+            "field": "kt",
+            "type": "quantitative",
+            "title": "Chicken meat (thousand t)",
+            "format": ",.1f"
+          },
+          {
+            "field": "change_pct",
+            "type": "quantitative",
+            "title": "Change on previous year (%)",
+            "format": "+.1f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "year_end": 2012,
+            "abbr": "SA",
+            "t": "SA and WA: no figures published after 1996–97"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontStyle": "italic",
+        "color": "#5A635D",
+        "dy": 9
+      },
+      "encoding": {
+        "text": {
+          "field": "t"
+        }
+      }
+    }
+  ]
+}

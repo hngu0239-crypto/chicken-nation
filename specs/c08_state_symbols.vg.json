@@ -1,0 +1,215 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Chart 8 (proportional symbol map, map 2). Local value of poultry sold for meat by state, 2024-25. Circle AREA is proportional to value. Dashed grey circles: not published by the ABS.",
+  "width": "container",
+  "height": 400,
+  "projection": {
+    "type": "conicEqualArea",
+    "parallels": [
+      -18,
+      -36
+    ],
+    "rotate": [
+      -133,
+      0,
+      0
+    ]
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/states.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#E3E8E0",
+        "stroke": "white",
+        "strokeWidth": 1.2
+      }
+    },
+    {
+      "data": {
+        "url": "data/c08_state_poultry_2024_25.csv"
+      },
+      "transform": [
+        {
+          "filter": "datum.abbr != 'ACT'"
+        },
+        {
+          "calculate": "datum.published == 'True'",
+          "as": "is_pub"
+        },
+        {
+          "calculate": "datum.is_pub ? '$' + format(toNumber(datum.value_m) / 1000, '.2f') + 'b' : 'not published'",
+          "as": "label"
+        }
+      ],
+      "layer": [
+        {
+          "transform": [
+            {
+              "filter": "datum.is_pub"
+            }
+          ],
+          "mark": {
+            "type": "circle",
+            "color": "#E0951A",
+            "opacity": 0.9,
+            "stroke": "white",
+            "strokeWidth": 1.5
+          },
+          "encoding": {
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
+            "size": {
+              "field": "value_m",
+              "type": "quantitative",
+              "scale": {
+                "domain": [
+                  0,
+                  1200
+                ],
+                "range": [
+                  0,
+                  4200
+                ]
+              },
+              "legend": {
+                "title": "$ million",
+                "orient": "bottom",
+                "direction": "horizontal",
+                "values": [
+                  250,
+                  500,
+                  1000
+                ],
+                "symbolFillColor": "#E0951A",
+                "symbolStrokeColor": "white",
+                "symbolOpacity": 0.9
+              }
+            },
+            "tooltip": [
+              {
+                "field": "state",
+                "title": "State"
+              },
+              {
+                "field": "value_m",
+                "type": "quantitative",
+                "title": "Value ($ million)",
+                "format": ",.1f"
+              }
+            ]
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "!datum.is_pub"
+            },
+            {
+              "calculate": "'Not published by the ABS (confidential)'",
+              "as": "why"
+            }
+          ],
+          "mark": {
+            "type": "circle",
+            "size": 600,
+            "fill": null,
+            "stroke": "#8D958F",
+            "strokeDash": [
+              3,
+              3
+            ],
+            "strokeWidth": 1.5
+          },
+          "encoding": {
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
+            "tooltip": [
+              {
+                "field": "state",
+                "title": "State"
+              },
+              {
+                "field": "why",
+                "title": "Value"
+              }
+            ]
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "fontSize": 12,
+            "fontWeight": 700,
+            "dy": -5
+          },
+          "encoding": {
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "abbr"
+            },
+            "color": {
+              "condition": {
+                "test": "datum.is_pub",
+                "value": "white"
+              },
+              "value": "#5A635D"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "fontSize": 11,
+            "dy": 9
+          },
+          "encoding": {
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "label"
+            },
+            "color": {
+              "condition": {
+                "test": "datum.is_pub",
+                "value": "white"
+              },
+              "value": "#5A635D"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

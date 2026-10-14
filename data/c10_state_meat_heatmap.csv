@@ -1,0 +1,246 @@
+state,fy,fy_end,kt,change_pct
+New South Wales,1965-66,1966,25.8,
+New South Wales,1966-67,1967,36.8,42.6
+New South Wales,1967-68,1968,43.6,18.5
+New South Wales,1968-69,1969,44.1,1.1
+New South Wales,1969-70,1970,48.9,10.9
+New South Wales,1970-71,1971,62.8,28.4
+New South Wales,1971-72,1972,65.2,3.8
+New South Wales,1972-73,1973,61.8,-5.2
+New South Wales,1973-74,1974,79.8,29.1
+New South Wales,1974-75,1975,74.5,-6.6
+New South Wales,1975-76,1976,83.0,11.4
+New South Wales,1976-77,1977,85.4,2.9
+New South Wales,1977-78,1978,95.9,12.3
+New South Wales,1978-79,1979,109.2,13.9
+New South Wales,1979-80,1980,128.1,17.3
+New South Wales,1980-81,1981,122.0,-4.8
+New South Wales,1981-82,1982,112.0,-8.2
+New South Wales,1982-83,1983,117.5,4.9
+New South Wales,1983-84,1984,107.3,-8.7
+New South Wales,1984-85,1985,126.3,17.7
+New South Wales,1985-86,1986,128.4,1.7
+New South Wales,1986-87,1987,134.3,4.6
+New South Wales,1987-88,1988,141.4,5.3
+New South Wales,1988-89,1989,148.1,4.7
+New South Wales,1989-90,1990,157.2,6.1
+New South Wales,1990-91,1991,160.3,2.0
+New South Wales,1991-92,1992,171.5,7.0
+New South Wales,1992-93,1993,176.5,2.9
+New South Wales,1993-94,1994,193.1,9.4
+New South Wales,1994-95,1995,199.6,3.4
+New South Wales,1995-96,1996,199.2,-0.2
+New South Wales,1996-97,1997,200.3,0.6
+New South Wales,1997-98,1998,211.6,5.6
+New South Wales,1998-99,1999,223.2,5.5
+New South Wales,1999-00,2000,221.2,-0.9
+New South Wales,2000-01,2001,244.3,10.4
+New South Wales,2001-02,2002,273.4,11.9
+New South Wales,2002-03,2003,256.4,-6.2
+New South Wales,2003-04,2004,247.8,-3.4
+New South Wales,2004-05,2005,265.7,7.2
+New South Wales,2005-06,2006,285.3,7.4
+New South Wales,2006-07,2007,291.9,2.3
+New South Wales,2007-08,2008,267.3,-8.4
+New South Wales,2008-09,2009,280.9,5.1
+New South Wales,2009-10,2010,265.9,-5.3
+New South Wales,2010-11,2011,351.5,32.2
+New South Wales,2011-12,2012,340.3,-3.2
+New South Wales,2012-13,2013,331.8,-2.5
+New South Wales,2013-14,2014,346.5,4.4
+New South Wales,2014-15,2015,357.9,3.3
+New South Wales,2015-16,2016,378.9,5.9
+New South Wales,2016-17,2017,397.7,5.0
+New South Wales,2017-18,2018,417.0,4.9
+New South Wales,2018-19,2019,462.0,10.8
+New South Wales,2019-20,2020,450.3,-2.5
+New South Wales,2020-21,2021,456.4,1.4
+New South Wales,2021-22,2022,486.3,6.6
+New South Wales,2022-23,2023,495.0,1.8
+New South Wales,2023-24,2024,536.7,8.4
+New South Wales,2024-25,2025,596.9,11.2
+New South Wales,2025-26,2026,621.0,4.0
+Queensland,1966-67,1967,11.9,
+Queensland,1967-68,1968,13.5,13.4
+Queensland,1968-69,1969,16.1,19.3
+Queensland,1969-70,1970,18.9,17.4
+Queensland,1970-71,1971,21.1,11.6
+Queensland,1971-72,1972,20.4,-3.3
+Queensland,1972-73,1973,21.1,3.4
+Queensland,1973-74,1974,24.1,14.2
+Queensland,1974-75,1975,23.1,-4.1
+Queensland,1975-76,1976,26.2,13.4
+Queensland,1976-77,1977,28.7,9.5
+Queensland,1977-78,1978,34.0,18.5
+Queensland,1978-79,1979,37.7,10.9
+Queensland,1979-80,1980,44.3,17.5
+Queensland,1980-81,1981,41.6,-6.1
+Queensland,1981-82,1982,39.0,-6.2
+Queensland,1982-83,1983,43.7,12.1
+Queensland,1983-84,1984,41.5,-5.0
+Queensland,1984-85,1985,45.6,9.9
+Queensland,1985-86,1986,51.9,13.8
+Queensland,1986-87,1987,56.2,8.3
+Queensland,1987-88,1988,56.8,1.1
+Queensland,1988-89,1989,58.2,2.5
+Queensland,1989-90,1990,59.8,2.7
+Queensland,1990-91,1991,62.0,3.7
+Queensland,1991-92,1992,64.1,3.4
+Queensland,1992-93,1993,67.3,5.0
+Queensland,1993-94,1994,72.0,7.0
+Queensland,1994-95,1995,76.3,6.0
+Queensland,1995-96,1996,71.6,-6.2
+Queensland,1996-97,1997,80.5,12.4
+Queensland,1997-98,1998,88.7,10.2
+Queensland,1998-99,1999,88.1,-0.7
+Queensland,1999-00,2000,95.4,8.3
+Queensland,2000-01,2001,93.9,-1.6
+Queensland,2001-02,2002,99.3,5.8
+Queensland,2002-03,2003,114.3,15.1
+Queensland,2003-04,2004,117.9,3.1
+Queensland,2004-05,2005,128.7,9.2
+Queensland,2005-06,2006,135.6,5.4
+Queensland,2006-07,2007,139.6,2.9
+Queensland,2007-08,2008,151.4,8.5
+Queensland,2008-09,2009,151.4,0.0
+Queensland,2009-10,2010,167.6,10.7
+Queensland,2010-11,2011,193.5,15.5
+Queensland,2011-12,2012,210.6,8.8
+Queensland,2012-13,2013,220.3,4.6
+Queensland,2013-14,2014,230.7,4.7
+Queensland,2014-15,2015,243.6,5.6
+Queensland,2015-16,2016,252.8,3.8
+Queensland,2016-17,2017,271.7,7.5
+Queensland,2017-18,2018,240.0,-11.7
+Queensland,2018-19,2019,223.0,-7.1
+Queensland,2019-20,2020,230.4,3.3
+Queensland,2020-21,2021,234.9,2.0
+Queensland,2021-22,2022,247.6,5.4
+Queensland,2022-23,2023,245.8,-0.7
+Queensland,2023-24,2024,259.9,5.7
+Queensland,2024-25,2025,260.3,0.2
+Queensland,2025-26,2026,265.8,2.1
+South Australia,1966-67,1967,4.2,
+South Australia,1967-68,1968,5.0,19.0
+South Australia,1968-69,1969,5.0,0.0
+South Australia,1969-70,1970,6.3,26.0
+South Australia,1970-71,1971,9.0,42.9
+South Australia,1971-72,1972,11.1,23.3
+South Australia,1972-73,1973,12.4,11.7
+South Australia,1973-74,1974,15.2,22.6
+South Australia,1974-75,1975,16.8,10.5
+South Australia,1975-76,1976,18.1,7.7
+South Australia,1976-77,1977,19.2,6.1
+South Australia,1977-78,1978,21.9,14.1
+South Australia,1978-79,1979,22.4,2.3
+South Australia,1979-80,1980,25.9,15.6
+South Australia,1980-81,1981,28.0,8.1
+South Australia,1981-82,1982,27.3,-2.5
+South Australia,1982-83,1983,31.2,14.3
+South Australia,1983-84,1984,33.5,7.4
+South Australia,1984-85,1985,35.9,7.2
+South Australia,1985-86,1986,34.2,-4.7
+South Australia,1986-87,1987,33.8,-1.2
+South Australia,1987-88,1988,34.9,3.3
+South Australia,1988-89,1989,32.9,-5.7
+South Australia,1989-90,1990,35.2,7.0
+South Australia,1990-91,1991,31.9,-9.4
+South Australia,1991-92,1992,37.0,16.0
+South Australia,1992-93,1993,38.6,4.3
+South Australia,1993-94,1994,40.7,5.4
+South Australia,1994-95,1995,39.1,-3.9
+South Australia,1995-96,1996,37.7,-3.6
+South Australia,1996-97,1997,38.9,3.2
+Victoria,1965-66,1966,13.2,
+Victoria,1966-67,1967,15.8,19.7
+Victoria,1967-68,1968,18.8,19.0
+Victoria,1968-69,1969,17.9,-4.8
+Victoria,1969-70,1970,20.4,14.0
+Victoria,1970-71,1971,25.2,23.5
+Victoria,1971-72,1972,30.1,19.4
+Victoria,1972-73,1973,28.3,-6.0
+Victoria,1973-74,1974,34.3,21.2
+Victoria,1974-75,1975,33.1,-3.5
+Victoria,1975-76,1976,36.3,9.7
+Victoria,1976-77,1977,39.8,9.6
+Victoria,1977-78,1978,44.2,11.1
+Victoria,1978-79,1979,48.4,9.5
+Victoria,1979-80,1980,56.1,15.9
+Victoria,1980-81,1981,57.0,1.6
+Victoria,1981-82,1982,55.5,-2.6
+Victoria,1982-83,1983,61.6,11.0
+Victoria,1983-84,1984,61.5,-0.2
+Victoria,1984-85,1985,75.1,22.1
+Victoria,1985-86,1986,84.4,12.4
+Victoria,1986-87,1987,84.6,0.2
+Victoria,1987-88,1988,96.3,13.8
+Victoria,1988-89,1989,97.4,1.1
+Victoria,1989-90,1990,92.6,-4.9
+Victoria,1990-91,1991,100.5,8.5
+Victoria,1991-92,1992,107.0,6.5
+Victoria,1992-93,1993,114.6,7.1
+Victoria,1993-94,1994,123.5,7.8
+Victoria,1994-95,1995,109.5,-11.3
+Victoria,1995-96,1996,127.7,16.6
+Victoria,1996-97,1997,121.4,-4.9
+Victoria,1997-98,1998,148.3,22.2
+Victoria,1998-99,1999,153.6,3.6
+Victoria,1999-00,2000,170.1,10.7
+Victoria,2000-01,2001,175.8,3.4
+Victoria,2001-02,2002,181.0,3.0
+Victoria,2002-03,2003,204.4,12.9
+Victoria,2003-04,2004,205.3,0.4
+Victoria,2004-05,2005,219.5,6.9
+Victoria,2005-06,2006,215.4,-1.9
+Victoria,2006-07,2007,236.0,9.6
+Victoria,2007-08,2008,231.4,-1.9
+Victoria,2008-09,2009,242.4,4.8
+Victoria,2009-10,2010,231.7,-4.4
+Victoria,2010-11,2011,244.8,5.7
+Victoria,2011-12,2012,241.8,-1.2
+Victoria,2012-13,2013,243.4,0.7
+Victoria,2013-14,2014,243.0,-0.2
+Victoria,2014-15,2015,238.5,-1.9
+Victoria,2015-16,2016,252.0,5.7
+Victoria,2016-17,2017,245.6,-2.5
+Victoria,2017-18,2018,212.3,-13.6
+Victoria,2018-19,2019,210.0,-1.1
+Victoria,2019-20,2020,223.5,6.4
+Victoria,2020-21,2021,247.3,10.6
+Victoria,2021-22,2022,267.7,8.2
+Victoria,2022-23,2023,271.9,1.6
+Victoria,2023-24,2024,275.6,1.4
+Victoria,2024-25,2025,284.9,3.4
+Victoria,2025-26,2026,304.4,6.8
+Western Australia,1965-66,1966,4.8,
+Western Australia,1966-67,1967,6.7,39.6
+Western Australia,1967-68,1968,7.6,13.4
+Western Australia,1968-69,1969,9.4,23.7
+Western Australia,1969-70,1970,9.7,3.2
+Western Australia,1970-71,1971,11.6,19.6
+Western Australia,1971-72,1972,13.3,14.7
+Western Australia,1972-73,1973,12.8,-3.8
+Western Australia,1973-74,1974,15.9,24.2
+Western Australia,1974-75,1975,16.1,1.3
+Western Australia,1975-76,1976,18.0,11.8
+Western Australia,1976-77,1977,19.4,7.8
+Western Australia,1977-78,1978,20.8,7.2
+Western Australia,1978-79,1979,22.6,8.7
+Western Australia,1979-80,1980,23.1,2.2
+Western Australia,1980-81,1981,23.0,-0.4
+Western Australia,1981-82,1982,21.8,-5.2
+Western Australia,1982-83,1983,24.6,12.8
+Western Australia,1983-84,1984,23.9,-2.8
+Western Australia,1984-85,1985,27.7,15.9
+Western Australia,1985-86,1986,29.9,7.9
+Western Australia,1986-87,1987,30.3,1.3
+Western Australia,1987-88,1988,32.9,8.6
+Western Australia,1988-89,1989,31.7,-3.6
+Western Australia,1989-90,1990,35.0,10.4
+Western Australia,1990-91,1991,33.4,-4.6
+Western Australia,1991-92,1992,35.9,7.5
+Western Australia,1992-93,1993,37.7,5.0
+Western Australia,1993-94,1994,39.4,4.5
+Western Australia,1994-95,1995,42.0,6.6
+Western Australia,1995-96,1996,44.4,5.7
+Western Australia,1996-97,1997,46.8,5.4

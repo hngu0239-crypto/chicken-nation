@@ -1,0 +1,209 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Chart 4 (bump chart). Rank of six livestock sectors by local value, 2020-21 to 2024-25. Poultry (meat) is highlighted; hover a circle for its value.",
+  "width": "container",
+  "height": 320,
+  "data": {
+    "url": "data/c04_sector_rank.csv"
+  },
+  "transform": [
+    {
+      "calculate": "datum.sector == 'Poultry (meat)'",
+      "as": "is_poultry"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "scale": {
+        "padding": 0.15
+      },
+      "axis": {
+        "title": null,
+        "labelAngle": 0,
+        "orient": "top",
+        "domain": false,
+        "ticks": false,
+        "labelFontWeight": 600,
+        "labelColor": "#1E2621"
+      }
+    },
+    "y": {
+      "field": "rank",
+      "type": "ordinal",
+      "axis": null
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "interpolate": "monotone",
+        "strokeCap": "round"
+      },
+      "encoding": {
+        "detail": {
+          "field": "sector"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.sector == 'Poultry (meat)'",
+            "value": "#E0951A"
+          },
+          "value": "#C9CFC8"
+        },
+        "strokeWidth": {
+          "condition": {
+            "test": "datum.sector == 'Poultry (meat)'",
+            "value": 5
+          },
+          "value": 3
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "size": 520,
+        "opacity": 1,
+        "stroke": "white",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "color": {
+          "field": "sector",
+          "type": "nominal",
+          "legend": null,
+          "scale": {
+            "domain": [
+              "Poultry (meat)",
+              "Cattle",
+              "Milk",
+              "Sheep & lambs",
+              "Wool",
+              "Pigs"
+            ],
+            "range": [
+              "#E0951A",
+              "#7A2E2E",
+              "#6F8FAF",
+              "#8C9A80",
+              "#B8A88A",
+              "#C98F98"
+            ]
+          }
+        },
+        "tooltip": [
+          {
+            "field": "sector",
+            "title": "Sector"
+          },
+          {
+            "field": "year",
+            "title": "Year"
+          },
+          {
+            "field": "rank",
+            "title": "Rank"
+          },
+          {
+            "field": "value_m",
+            "type": "quantitative",
+            "title": "Local value ($ million)",
+            "format": ",.0f"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 12,
+        "fontWeight": 700,
+        "color": "white"
+      },
+      "encoding": {
+        "text": {
+          "field": "rank"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.year == '2024-25'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 20,
+        "fontSize": 13,
+        "fontWeight": 600
+      },
+      "encoding": {
+        "text": {
+          "field": "sector"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.sector == 'Poultry (meat)'",
+            "value": "#965700"
+          },
+          "value": "#5A635D"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.year == '2020-21'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -20,
+        "fontSize": 12
+      },
+      "encoding": {
+        "text": {
+          "field": "value_m",
+          "type": "quantitative",
+          "format": "$,.0f"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.sector == 'Poultry (meat)'",
+            "value": "#965700"
+          },
+          "value": "#5A635D"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "year": "2023-24",
+            "rank": "3",
+            "t": "2023–24: poultry ($4.0b) passes sheep ($3.7b)"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "dy": -24,
+        "fontSize": 12,
+        "fontStyle": "italic",
+        "color": "#965700"
+      },
+      "encoding": {
+        "text": {
+          "field": "t"
+        }
+      }
+    }
+  ]
+}
