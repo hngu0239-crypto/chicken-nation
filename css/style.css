@@ -34,8 +34,8 @@
   --seq-3: #D99520; --seq-4: #A86A10; --seq-5: #6E4208;
 
   /* Type */
-  --font-sans:  "Bricolage Grotesque", sans-serif;
-  --font-serif: "Bricolage Grotesque", sans-serif;
+  --font-sans:  "Bricolage Grotesque";
+  --font-serif: "Bricolage Grotesque";
 
   /* Layout and rhythm */
   --page-width: 1080px;
