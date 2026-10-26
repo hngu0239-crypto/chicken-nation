@@ -2,8 +2,7 @@
    The Chicken Nation — stylesheet
    Theme: cream page, forest-green frame and headings,
    gold = chicken, burgundy = beef, sage = sheep.
-   Fonts: Bricolage Grotesque (sans) for everything;
-          Source Serif 4 only for the hero deck and pull quotes.
+   Font: Bricolage Grotesque for everything (titles, headers, body). No serif anywhere.
    ========================================================= */
 
 :root {
@@ -34,8 +33,8 @@
   --seq-3: #D99520; --seq-4: #A86A10; --seq-5: #6E4208;
 
   /* Type */
-  --font-sans:  "Bricolage Grotesque";
-  --font-serif: "Bricolage Grotesque";
+  --font-head: "Bricolage Grotesque", sans-serif;   /* headers and titles */
+  --font-body: "Bricolage Grotesque", sans-serif;   /* all other text */
 
   /* Layout and rhythm */
   --page-width: 1080px;
@@ -53,7 +52,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 1.0625rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -70,10 +69,10 @@ body {
 }
 .skip-link:focus { left: 1rem; }
 
-strong { font-weight: 800; }
+strong { font-weight: 700; }
 
 /* ---------- Headings ---------- */
-h1, h2, h3 { font-family: var(--font-sans); line-height: 1.12; margin: 0; color: inherit; }
+h1, h2, h3 { font-family: var(--font-head); line-height: 1.12; margin: 0; color: inherit; }
 h1 { font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 800; letter-spacing: -0.025em; }
 h2 { font-size: clamp(2rem, 3.6vw, 2.375rem); font-weight: 800; letter-spacing: -0.015em; } /* 32–38px */
 h3 { font-size: 1.375rem; font-weight: 600; letter-spacing: -0.005em; }                       /* 22px */
@@ -84,9 +83,9 @@ h3 { font-size: 1.375rem; font-weight: 600; letter-spacing: -0.005em; }         
   color: var(--frame-text);
   padding-block: clamp(3.5rem, 8vw, 5.5rem) 2.5rem;
 }
-.kicker { font-weight: 600; color: var(--frame-gold); margin: 0 0 0.75rem; }
+.kicker { font-family: var(--font-head); font-weight: 600; color: var(--frame-gold); margin: 0 0 0.75rem; }
 .deck {
-  font-family: var(--font-serif);
+  font-family: var(--font-body);
   font-size: clamp(1.15rem, 2vw, 1.35rem);
   line-height: 1.55;
   max-width: var(--prose-width);
@@ -101,6 +100,7 @@ h3 { font-size: 1.375rem; font-weight: 600; letter-spacing: -0.005em; }         
   border-top: 1px solid rgba(238, 242, 236, 0.25);
 }
 .stat dt {
+  font-family: var(--font-head);
   font-size: clamp(2rem, 4.5vw, 3rem);
   font-weight: 800;
   line-height: 1;
@@ -127,6 +127,7 @@ h3 { font-size: 1.375rem; font-weight: 600; letter-spacing: -0.005em; }         
 .section-head { margin-bottom: 1.25rem; }
 .section-num {
   display: flex; align-items: center; gap: 0.6rem;
+  font-family: var(--font-head);
   font-weight: 800; font-size: 1rem;
   color: var(--chicken);
   margin: 0 0 0.5rem;
@@ -197,8 +198,9 @@ h3 { font-size: 1.375rem; font-weight: 600; letter-spacing: -0.005em; }         
   padding: 1.25rem 0 1.25rem 1.5rem;
   border-left: 5px solid var(--chicken-fill);
 }
-.callout-label { font-weight: 600; color: var(--chicken); margin: 0 0 0.35rem; }
+.callout-label { font-family: var(--font-head); font-weight: 600; color: var(--chicken); margin: 0 0 0.35rem; }
 .callout-big {
+  font-family: var(--font-head);
   font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 800; line-height: 1.2;
   color: var(--forest);
   margin: 0 0 0.6rem;
@@ -213,8 +215,9 @@ h3 { font-size: 1.375rem; font-weight: 600; letter-spacing: -0.005em; }         
 }
 .pull-quote p {
   margin: 0;
-  font-family: var(--font-serif);
-  font-style: italic;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 600;
   font-size: clamp(1.3rem, 2.4vw, 1.6rem);
   line-height: 1.4;
   color: var(--forest);
@@ -246,7 +249,7 @@ h3 { font-size: 1.375rem; font-weight: 600; letter-spacing: -0.005em; }         
 .credits { margin-top: 2.25rem; padding-top: 1.5rem; border-top: 1px solid rgba(238, 242, 236, 0.25); color: var(--frame-muted); }
 .credits strong { color: var(--frame-text); }
 
-#vg-tooltip-element { font-family: var(--font-sans); font-size: 13px; }
+#vg-tooltip-element { font-family: var(--font-body); font-size: 13px; }
 
 a { color: var(--chicken); text-underline-offset: 0.15em; }
 a:hover { text-decoration-thickness: 2px; }

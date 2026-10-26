@@ -6,19 +6,22 @@
    ========================================================= */
 
 // Shared look for every chart, so each spec file stays short and readable.
+// One font for all chart text, matching the page: Bricolage Grotesque.
+// "sans-serif" is only a safety net if the web font fails to load.
 const VEGA_CONFIG = {
-  font: "Bricolage Grotesque, Avenir Next, Segoe UI, system-ui, sans-serif",
-  background: null,                       // transparent: the page colour shows through
+  font: "Bricolage Grotesque, sans-serif",
+  background: null,                       // transparent: the section colour shows through
   view: { stroke: null },
   title: {
-    anchor: "start", fontSize: 18, fontWeight: 800, color: "#1E2621",
-    subtitleFontSize: 13, subtitleColor: "#5A635D", subtitlePadding: 6, offset: 18
+    anchor: "start", fontSize: 18, fontWeight: 800, color: "#26382F",
+    subtitleFontSize: 13, subtitleColor: "#535C56", subtitlePadding: 6, offset: 18
   },
   axis: {
-    labelColor: "#5A635D", titleColor: "#5A635D", labelFontSize: 12, titleFontSize: 12,
-    titleFontWeight: 600, domainColor: "#C4CAC1", tickColor: "#C4CAC1", gridColor: "#E1E5DE"
+    labelColor: "#535C56", titleColor: "#535C56", labelFontSize: 12, titleFontSize: 12,
+    titleFontWeight: 600, domainColor: "#C4CAC1", tickColor: "#C4CAC1",
+    gridColor: "#E4E2D9", gridWidth: 0.75
   },
-  legend: { labelColor: "#5A635D", titleColor: "#1E2621", labelFontSize: 12, titleFontSize: 12 },
+  legend: { labelColor: "#535C56", titleColor: "#26382F", labelFontSize: 12, titleFontSize: 12 },
   text: { color: "#1E2621" }
 };
 
@@ -37,12 +40,20 @@ const CHARTS = [
   { id: "c12", spec: "specs/c12_sa4_lollipop.vg.json" },
 ];
 
-CHARTS.forEach(({ id, spec }) => {
-  vegaEmbed("#" + id, spec, { actions: false, config: { font: "Bricolage Grotesque", background: null }, renderer: "svg", config: VEGA_CONFIG })
+function embedChart({ id, spec }) {
+  return vegaEmbed("#" + id, spec, { actions: false, renderer: "svg", config: VEGA_CONFIG })
     .catch(err => {
       console.error(id, err);
       document.getElementById(id).innerHTML =
         `<p class="chart-error">Chart ${id} could not load: ${err.message}. ` +
         `Open the page through http://localhost:8000, not by double-clicking the file.</p>`;
     });
-});
+}
+
+// Wait until Bricolage Grotesque has loaded, so charts are drawn (and their
+// labels measured) with the right font rather than a temporary fallback.
+const fontsReady = document.fonts && document.fonts.ready
+  ? document.fonts.ready
+  : Promise.resolve();
+
+fontsReady.then(() => CHARTS.forEach(embedChart));
