@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Chart 2 (multi-line). Apparent consumption per person of four meats, 1974-75 to 2024-25. Hover a line to highlight it; hover anywhere to read all four values for that year.",
+  "description": "Chart 2 (multi-line). Apparent consumption per person of four meats, 1974-1975 to 2024-2025. Hover a line to highlight it; hover anywhere to read all four values for that year.",
   "width": "container",
   "height": 400,
   "data": {
@@ -17,24 +17,21 @@
       "field": "year_start",
       "type": "quantitative",
       "scale": {
-        "domain": [
-          1971,
-          2033
-        ]
+        "domain": [1971, 2034]
       },
       "axis": {
-        "title": null,
+        "title": "Financial year (July to June)",
+        "titleFontWeight": 600,
+        "titleColor": "#535C56",
+        "titlePadding": 10,
         "format": "d",
-        "values": [
-          1975,
-          1985,
-          1995,
-          2005,
-          2015,
-          2025
-        ],
+        "values": [1975, 1985, 1995, 2005, 2015, 2024],
+        "labelExpr": "datum.value + '–' + (datum.value + 1)",
+        "labelColor": "#535C56",
         "grid": false,
-        "domain": false
+        "domain": true,
+        "domainColor": "#B9BFB7",
+        "tickColor": "#B9BFB7"
       }
     }
   },
@@ -46,12 +43,12 @@
           {
             "x": 2001,
             "y": 64,
-            "text": "2001–02: chicken (33.2 kg) passes beef (32.7 kg) for the first time"
+            "text": "2001–2002: chicken (33.2 kg) passes beef (32.7 kg) for the first time"
           },
           {
             "x": 2004,
             "y": 59,
-            "text": "2004–05: chicken passes beef for good"
+            "text": "2004–2005: chicken passes beef for good"
           }
         ]
       },
@@ -59,17 +56,11 @@
         {
           "mark": {
             "type": "rule",
-            "strokeDash": [
-              3,
-              3
-            ],
+            "strokeDash": [3, 3],
             "color": "#9AA39C"
           },
           "encoding": {
-            "x": {
-              "field": "x",
-              "type": "quantitative"
-            }
+            "x": {"field": "x", "type": "quantitative"}
           }
         },
         {
@@ -79,34 +70,24 @@
             "dx": 6,
             "fontSize": 12,
             "fontStyle": "italic",
-            "color": "#5A635D"
+            "color": "#535C56"
           },
           "encoding": {
-            "x": {
-              "field": "x",
-              "type": "quantitative"
-            },
-            "y": {
-              "field": "y",
-              "type": "quantitative"
-            },
-            "text": {
-              "field": "text"
-            }
+            "x": {"field": "x", "type": "quantitative"},
+            "y": {"field": "y", "type": "quantitative"},
+            "text": {"field": "text"}
           }
         }
       ]
     },
     {
-      "description": "The four lines. Hovering a line highlights it.",
+      "description": "The four lines. Hovering a line highlights it. Colours are fixed per meat across the whole site: gold #D99520 chicken, burgundy #843D39 beef, pink pork, sage #81927C lamb.",
       "params": [
         {
           "name": "meatHover",
           "select": {
             "type": "point",
-            "fields": [
-              "label"
-            ],
+            "fields": ["label"],
             "on": "pointerover",
             "clear": "pointerout"
           }
@@ -121,22 +102,22 @@
         "y": {
           "field": "kg",
           "type": "quantitative",
-          "scale": {
-            "domain": [
-              0,
-              70
-            ]
-          },
+          "scale": {"domain": [0, 70]},
           "axis": {
-            "title": "kg per person",
+            "title": "kg per person per year",
+            "titleFontWeight": 600,
+            "titleColor": "#535C56",
             "titleAngle": 0,
             "titleAlign": "left",
             "titleAnchor": "end",
             "titleY": -14,
             "titleX": 0,
             "tickCount": 7,
+            "labelColor": "#535C56",
             "domain": false,
-            "ticks": false
+            "ticks": false,
+            "gridColor": "#E4E2D9",
+            "gridWidth": 0.75
           }
         },
         "color": {
@@ -144,43 +125,24 @@
           "type": "nominal",
           "legend": null,
           "scale": {
-            "domain": [
-              "Chicken",
-              "Beef",
-              "Pork",
-              "Lamb & mutton"
-            ],
-            "range": [
-              "#E0951A",
-              "#7A2E2E",
-              "#C98F98",
-              "#8C9A80"
-            ]
+            "domain": ["Chicken", "Beef", "Pork", "Lamb & mutton"],
+            "range": ["#D99520", "#843D39", "#C98F98", "#81927C"]
           }
         },
         "strokeWidth": {
-          "condition": {
-            "test": "datum.label == 'Chicken'",
-            "value": 4.5
-          },
+          "condition": {"test": "datum.label == 'Chicken'", "value": 4.5},
           "value": 2.5
         },
         "opacity": {
-          "condition": {
-            "param": "meatHover",
-            "empty": true,
-            "value": 1
-          },
+          "condition": {"param": "meatHover", "empty": true, "value": 1},
           "value": 0.25
         }
       }
     },
     {
-      "description": "Annotation 2: start values (1974-75) on the left.",
+      "description": "Annotation 2: start values (1974-1975) on the left.",
       "transform": [
-        {
-          "filter": "datum.year == '1974-75'"
-        },
+        {"filter": "datum.year == '1974-75'"},
         {
           "calculate": "datum.label == 'Pork' ? toNumber(datum.kg) - 1.8 : datum.label == 'Chicken' ? toNumber(datum.kg) + 1.2 : toNumber(datum.kg)",
           "as": "label_y"
@@ -194,42 +156,23 @@
         "fontWeight": 600
       },
       "encoding": {
-        "y": {
-          "field": "label_y",
-          "type": "quantitative"
-        },
-        "text": {
-          "field": "kg",
-          "type": "quantitative",
-          "format": ".1f"
-        },
+        "y": {"field": "label_y", "type": "quantitative"},
+        "text": {"field": "kg", "type": "quantitative", "format": ".1f"},
         "color": {
           "field": "label",
           "type": "nominal",
           "legend": null,
           "scale": {
-            "domain": [
-              "Chicken",
-              "Beef",
-              "Pork",
-              "Lamb & mutton"
-            ],
-            "range": [
-              "#965700",
-              "#7A2E2E",
-              "#A8707A",
-              "#66745B"
-            ]
+            "domain": ["Chicken", "Beef", "Pork", "Lamb & mutton"],
+            "range": ["#965700", "#843D39", "#A8707A", "#5E6E59"]
           }
         }
       }
     },
     {
-      "description": "Annotation 3: direct labels with end values (2024-25) instead of a legend.",
+      "description": "Annotation 3: direct labels with end values (2024-2025) instead of a legend.",
       "transform": [
-        {
-          "filter": "datum.year == '2024-25'"
-        },
+        {"filter": "datum.year == '2024-25'"},
         {
           "calculate": "datum.label + '  ' + format(datum.kg, '.1f') + ' kg'",
           "as": "end_text"
@@ -247,30 +190,15 @@
         "fontWeight": 700
       },
       "encoding": {
-        "y": {
-          "field": "label_y",
-          "type": "quantitative"
-        },
-        "text": {
-          "field": "end_text"
-        },
+        "y": {"field": "label_y", "type": "quantitative"},
+        "text": {"field": "end_text"},
         "color": {
           "field": "label",
           "type": "nominal",
           "legend": null,
           "scale": {
-            "domain": [
-              "Chicken",
-              "Beef",
-              "Pork",
-              "Lamb & mutton"
-            ],
-            "range": [
-              "#965700",
-              "#7A2E2E",
-              "#A8707A",
-              "#66745B"
-            ]
+            "domain": ["Chicken", "Beef", "Pork", "Lamb & mutton"],
+            "range": ["#965700", "#843D39", "#A8707A", "#5E6E59"]
           }
         }
       }
@@ -279,43 +207,32 @@
       "description": "Note about the shorter sheep series.",
       "data": {
         "values": [
-          {
-            "x": 1988.5,
-            "y": 26.5,
-            "text": "Lamb & mutton figures start in 1988–89"
-          }
+          {"x": 1988.5, "y": 26.5, "text": "Lamb & mutton figures start in 1988–1989"}
         ]
       },
       "mark": {
         "type": "text",
         "align": "left",
         "fontSize": 11,
-        "color": "#66745B"
+        "color": "#5E6E59"
       },
       "encoding": {
-        "x": {
-          "field": "x",
-          "type": "quantitative"
-        },
-        "y": {
-          "field": "y",
-          "type": "quantitative"
-        },
-        "text": {
-          "field": "text"
-        }
+        "x": {"field": "x", "type": "quantitative"},
+        "y": {"field": "y", "type": "quantitative"},
+        "text": {"field": "text"}
       }
     },
     {
-      "description": "Interaction: a vertical guide line and a tooltip with all four meats for the hovered year.",
+      "description": "Interaction: a vertical guide line and a tooltip with all four meats for the hovered year (shown as a full financial year, e.g. 2024–2025).",
       "transform": [
         {
           "pivot": "label",
           "value": "kg",
-          "groupby": [
-            "year",
-            "year_start"
-          ]
+          "groupby": ["year", "year_start"]
+        },
+        {
+          "calculate": "toNumber(datum.year_start) + '–' + (toNumber(datum.year_start) + 1)",
+          "as": "year_full"
         }
       ],
       "params": [
@@ -323,9 +240,7 @@
           "name": "yearHover",
           "select": {
             "type": "point",
-            "fields": [
-              "year_start"
-            ],
+            "fields": ["year_start"],
             "nearest": true,
             "on": "pointerover",
             "clear": "pointerout"
@@ -339,45 +254,23 @@
       },
       "encoding": {
         "opacity": {
-          "condition": {
-            "param": "yearHover",
-            "empty": false,
-            "value": 0.35
-          },
+          "condition": {"param": "yearHover", "empty": false, "value": 0.35},
           "value": 0
         },
         "tooltip": [
-          {
-            "field": "year",
-            "title": "Year"
-          },
-          {
-            "field": "Chicken",
-            "title": "Chicken (kg)",
-            "format": ".1f"
-          },
-          {
-            "field": "Beef",
-            "title": "Beef (kg)",
-            "format": ".1f"
-          },
-          {
-            "field": "Pork",
-            "title": "Pork (kg)",
-            "format": ".1f"
-          },
-          {
-            "field": "Lamb & mutton",
-            "title": "Lamb & mutton (kg)",
-            "format": ".1f"
-          }
+          {"field": "year_full", "title": "Year"},
+          {"field": "Chicken", "title": "Chicken (kg)", "format": ".1f"},
+          {"field": "Beef", "title": "Beef (kg)", "format": ".1f"},
+          {"field": "Pork", "title": "Pork (kg)", "format": ".1f"},
+          {"field": "Lamb & mutton", "title": "Lamb & mutton (kg)", "format": ".1f"}
         ]
       }
     }
   ],
   "resolve": {
-    "scale": {
-      "color": "independent"
-    }
+    "scale": {"color": "independent"}
+  },
+  "config": {
+    "view": {"stroke": null}
   }
 }
