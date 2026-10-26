@@ -8,7 +8,8 @@
 
 :root {
   /* Page and text */
-  --bg:      #F6F1E7;   /* one warm off-white for the whole page */
+  --bg:      #F6F1E7;   /* cream: page and odd sections */
+  --bg-alt:  #E6ECE1;   /* light green: even sections */
   --ink:     #1E2621;
   --muted:   #535C56;
   --rule:    #D9D6CB;
@@ -38,10 +39,10 @@
 
   /* Layout and rhythm */
   --page-width: 1080px;
-  --prose-width: 46rem;
+  --prose-width: 100%;      /* text spans the full content width */
   --gap: clamp(1.25rem, 3vw, 2rem);
-  --section-pad: clamp(2rem, 4vw, 2.5rem);   /* 64–80px between sections */
-  --chart-gap:   clamp(1.75rem, 3vw, 2.5rem); /* 28–40px between charts   */
+  --section-pad: clamp(1.5rem, 3vw, 2rem);   /* 48–64px between sections */
+  --chart-gap:   clamp(1.5rem, 2.5vw, 2rem);  /* 24–32px between charts   */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -119,11 +120,11 @@ h3 { font-size: 1.375rem; font-weight: 600; letter-spacing: -0.005em; }         
 .section-nav a span { color: var(--frame-gold); margin-right: 0.3rem; }
 .section-nav a:hover { text-decoration: underline; text-underline-offset: 0.25em; }
 
-/* ---------- Story sections: one background, thin divider ---------- */
-.story { padding-block: var(--section-pad); }
-.story + .story { border-top: 1px solid var(--rule); }
+/* ---------- Story sections: cream and light green, alternating ---------- */
+.story { padding-block: var(--section-pad); background: var(--bg); }
+.story:nth-of-type(even) { background: var(--bg-alt); }
 
-.section-head { margin-bottom: 1.75rem; }
+.section-head { margin-bottom: 1.25rem; }
 .section-num {
   display: flex; align-items: center; gap: 0.6rem;
   font-weight: 800; font-size: 1rem;
@@ -134,7 +135,7 @@ h3 { font-size: 1.375rem; font-weight: 600; letter-spacing: -0.005em; }         
   content: ""; width: 2.5rem; height: 3px; border-radius: 2px;
   background: var(--chicken-fill);
 }
-.section-head h2 { color: var(--forest); margin-bottom: 0.9rem; }
+.section-head h2 { color: var(--forest); margin-bottom: 0.7rem; }
 .lead { font-size: 1.15rem; max-width: var(--prose-width); margin: 0; }
 .prose { max-width: var(--prose-width); margin: 0 0 var(--chart-gap); }
 
@@ -220,7 +221,7 @@ h3 { font-size: 1.375rem; font-weight: 600; letter-spacing: -0.005em; }         
 }
 
 /* ---------- Takeaways ---------- */
-.takeaways { margin-top: 0.5rem; padding-top: 2rem; border-top: 2px solid var(--forest); }
+.takeaways { margin-top: 0.5rem; padding-top: 1.5rem; border-top: 2px solid var(--forest); }
 .takeaways h2 { color: var(--forest); font-size: clamp(1.6rem, 3vw, 2rem); margin-bottom: 1.25rem; }
 .takeaway-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 3vw, 2.5rem); }
 .takeaway h3 { font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--chicken); }
