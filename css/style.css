@@ -34,8 +34,8 @@
   --seq-3: #D99520; --seq-4: #A86A10; --seq-5: #6E4208;
 
   /* Type */
-  --font-sans:  "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
-  --font-serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --font-sans:  "Bricolage Grotesque", sans-serif;
+  --font-serif: "Bricolage Grotesque", sans-serif;
 
   /* Layout and rhythm */
   --page-width: 1080px;

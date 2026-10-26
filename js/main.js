@@ -38,7 +38,7 @@ const CHARTS = [
 ];
 
 CHARTS.forEach(({ id, spec }) => {
-  vegaEmbed("#" + id, spec, { actions: false, renderer: "svg", config: VEGA_CONFIG })
+  vegaEmbed("#" + id, spec, { actions: false, config: { font: "Bricolage Grotesque, sans-serif", background: null }, renderer: "svg", config: VEGA_CONFIG })
     .catch(err => {
       console.error(id, err);
       document.getElementById(id).innerHTML =
