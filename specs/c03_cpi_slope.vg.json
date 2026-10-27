@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Chart 3 (slope chart). Consumer Price Index for four meats and for all prices, re-based so that 1980-1981 = 100. The end value shows how many times more expensive each item became by 2024-2025. Both axes are titled: x = financial year, y = price index.",
+  "description": "Chart 3 (slope chart). Consumer Price Index for four meats and for all prices, re-based so that 1980-1981 = 100. Both axes are drawn with an axis line, tick marks, tick labels and a title: x = financial year (bottom), y = price index (left, 0 to 600).",
   "width": "container",
-  "height": 380,
+  "height": 400,
   "data": {
     "url": "data/c03_cpi_slope.csv"
   },
@@ -20,35 +20,67 @@
     "x": {
       "field": "year",
       "type": "ordinal",
-      "scale": {"padding": 0.8},
+      "scale": {
+        "padding": 0.8
+      },
       "axis": {
+        "orient": "bottom",
         "title": "Financial year (July to June)",
+        "titleFontSize": 13,
         "titleFontWeight": 600,
-        "titleColor": "#535C56",
-        "titlePadding": 8,
+        "titleColor": "#26382F",
+        "titlePadding": 12,
         "labelExpr": "datum.value == '1980-81' ? '1980–1981' : '2024–2025'",
         "labelAngle": 0,
-        "orient": "top",
-        "domain": false,
-        "ticks": false,
         "labelFontSize": 13,
         "labelFontWeight": 700,
-        "labelColor": "#1E2621"
+        "labelColor": "#1E2621",
+        "labelPadding": 8,
+        "domain": true,
+        "domainColor": "#8D958F",
+        "domainWidth": 1.2,
+        "ticks": true,
+        "tickColor": "#8D958F",
+        "tickSize": 6,
+        "tickWidth": 1.2,
+        "grid": false
       }
     },
     "y": {
       "field": "index",
       "type": "quantitative",
-      "scale": {"domain": [0, 600]},
+      "scale": {
+        "domain": [
+          0,
+          600
+        ]
+      },
       "axis": {
+        "orient": "left",
         "title": "Price index (1980–1981 = 100)",
+        "titleFontSize": 13,
         "titleFontWeight": 600,
-        "titleColor": "#535C56",
-        "titlePadding": 10,
-        "values": [100, 200, 300, 400, 500, 600],
+        "titleColor": "#26382F",
+        "titlePadding": 14,
+        "values": [
+          0,
+          100,
+          200,
+          300,
+          400,
+          500,
+          600
+        ],
+        "labelFontSize": 12,
         "labelColor": "#535C56",
-        "domain": false,
-        "ticks": false,
+        "labelPadding": 6,
+        "domain": true,
+        "domainColor": "#8D958F",
+        "domainWidth": 1.2,
+        "ticks": true,
+        "tickColor": "#8D958F",
+        "tickSize": 6,
+        "tickWidth": 1.2,
         "grid": true,
         "gridColor": "#E4E2D9",
         "gridWidth": 0.75
@@ -58,53 +90,105 @@
   "layer": [
     {
       "description": "One line per item. Chicken in gold, the all-prices reference dashed, other meats grey.",
-      "mark": {"type": "line", "strokeCap": "round"},
+      "mark": {
+        "type": "line",
+        "strokeCap": "round"
+      },
       "encoding": {
-        "detail": {"field": "item"},
+        "detail": {
+          "field": "item"
+        },
         "color": {
           "field": "role",
           "type": "nominal",
           "legend": null,
           "scale": {
-            "domain": ["chicken", "reference", "other"],
-            "range": ["#D99520", "#1E2621", "#B9C0BA"]
+            "domain": [
+              "chicken",
+              "reference",
+              "other"
+            ],
+            "range": [
+              "#D99520",
+              "#1E2621",
+              "#B9C0BA"
+            ]
           }
         },
         "strokeWidth": {
-          "condition": {"test": "datum.role == 'chicken'", "value": 4.5},
+          "condition": {
+            "test": "datum.role == 'chicken'",
+            "value": 4.5
+          },
           "value": 2.5
         },
         "strokeDash": {
-          "condition": {"test": "datum.role == 'reference'", "value": [5, 4]},
-          "value": [1, 0]
+          "condition": {
+            "test": "datum.role == 'reference'",
+            "value": [
+              5,
+              4
+            ]
+          },
+          "value": [
+            1,
+            0
+          ]
         }
       }
     },
     {
       "description": "End points with tooltip (years shown in full).",
-      "mark": {"type": "circle", "size": 110, "opacity": 1},
+      "mark": {
+        "type": "circle",
+        "size": 110,
+        "opacity": 1
+      },
       "encoding": {
         "color": {
           "field": "role",
           "type": "nominal",
           "legend": null,
           "scale": {
-            "domain": ["chicken", "reference", "other"],
-            "range": ["#D99520", "#1E2621", "#9AA39C"]
+            "domain": [
+              "chicken",
+              "reference",
+              "other"
+            ],
+            "range": [
+              "#D99520",
+              "#1E2621",
+              "#9AA39C"
+            ]
           }
         },
         "tooltip": [
-          {"field": "item", "title": "Item"},
-          {"field": "year_full", "title": "Year"},
-          {"field": "index", "title": "Price index (1980–1981 = 100)", "format": ".0f"},
-          {"field": "times", "title": "Times the 1980–1981 price"}
+          {
+            "field": "item",
+            "title": "Item"
+          },
+          {
+            "field": "year_full",
+            "title": "Year"
+          },
+          {
+            "field": "index",
+            "title": "Price index (1980–1981 = 100)",
+            "format": ".0f"
+          },
+          {
+            "field": "times",
+            "title": "Times the 1980–1981 price"
+          }
         ]
       }
     },
     {
       "description": "Annotation: one shared label for the common starting point.",
       "transform": [
-        {"filter": "datum.year == '1980-81' && datum.role == 'chicken'"}
+        {
+          "filter": "datum.year == '1980-81' && datum.role == 'chicken'"
+        }
       ],
       "mark": {
         "type": "text",
@@ -114,13 +198,17 @@
         "color": "#5A635D"
       },
       "encoding": {
-        "text": {"value": "All start at 100"}
+        "text": {
+          "value": "All start at 100"
+        }
       }
     },
     {
-      "description": "Annotation: end labels with the multiplier. Small nudges stop close labels from overlapping. Own y axis hidden so it does not duplicate the main axis.",
+      "description": "Annotation: end labels with the multiplier. Small nudges stop close labels from overlapping. Shares the main y axis (same title), so no second axis is drawn.",
       "transform": [
-        {"filter": "datum.year == '2024-25'"},
+        {
+          "filter": "datum.year == '2024-25'"
+        },
         {
           "calculate": "datum.item + '  ×' + format(datum.times, '.1f')",
           "as": "end_text"
@@ -138,15 +226,29 @@
         "fontWeight": 600
       },
       "encoding": {
-        "y": {"field": "label_y", "type": "quantitative", "axis": null},
-        "text": {"field": "end_text"},
+        "y": {
+          "field": "label_y",
+          "type": "quantitative",
+          "title": "Price index (1980–1981 = 100)"
+        },
+        "text": {
+          "field": "end_text"
+        },
         "color": {
           "field": "role",
           "type": "nominal",
           "legend": null,
           "scale": {
-            "domain": ["chicken", "reference", "other"],
-            "range": ["#965700", "#1E2621", "#5A635D"]
+            "domain": [
+              "chicken",
+              "reference",
+              "other"
+            ],
+            "range": [
+              "#965700",
+              "#1E2621",
+              "#5A635D"
+            ]
           }
         }
       }
@@ -158,7 +260,10 @@
           {
             "year": "2024-25",
             "index": 195,
-            "text": ["Doubled, while average", "prices rose five-fold"]
+            "text": [
+              "Doubled, while average",
+              "prices rose five-fold"
+            ]
           }
         ]
       },
@@ -173,14 +278,20 @@
         "color": "#965700"
       },
       "encoding": {
-        "text": {"field": "text"}
+        "text": {
+          "field": "text"
+        }
       }
     }
   ],
   "resolve": {
-    "scale": {"color": "independent"}
+    "scale": {
+      "color": "independent"
+    }
   },
   "config": {
-    "view": {"stroke": null}
+    "view": {
+      "stroke": null
+    }
   }
 }
