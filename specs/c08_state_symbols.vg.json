@@ -2,18 +2,28 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "description": "Chart 8 (proportional symbol map, map 2). Local value of poultry sold for meat by state, 2024-2025. Circle AREA is proportional to value. Dashed grey circles mark states not published by the ABS; this is shown separately from zero, with its own legend key next to the size legend.",
   "width": "container",
-  "height": 420,
+  "height": 400,
   "projection": {
     "type": "conicEqualArea",
-    "parallels": [-18, -36],
-    "rotate": [-133, 0, 0]
+    "parallels": [
+      -18,
+      -36
+    ],
+    "rotate": [
+      -133,
+      0,
+      0
+    ]
   },
   "layer": [
     {
       "description": "Base map of states.",
       "data": {
         "url": "data/states.geojson",
-        "format": {"type": "json", "property": "features"}
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
       },
       "mark": {
         "type": "geoshape",
@@ -23,10 +33,17 @@
       }
     },
     {
-      "data": {"url": "data/c08_state_poultry_2024_25.csv"},
+      "data": {
+        "url": "data/c08_state_poultry_2024_25.csv"
+      },
       "transform": [
-        {"filter": "datum.abbr != 'ACT'"},
-        {"calculate": "datum.published == 'True'", "as": "is_pub"},
+        {
+          "filter": "datum.abbr != 'ACT'"
+        },
+        {
+          "calculate": "datum.published == 'True'",
+          "as": "is_pub"
+        },
         {
           "calculate": "datum.is_pub ? '$' + format(toNumber(datum.value_m) / 1000, '.2f') + 'b' : 'Not published'",
           "as": "label"
@@ -35,7 +52,11 @@
       "layer": [
         {
           "description": "Published states: gold circles, area = value.",
-          "transform": [{"filter": "datum.is_pub"}],
+          "transform": [
+            {
+              "filter": "datum.is_pub"
+            }
+          ],
           "mark": {
             "type": "circle",
             "color": "#D99520",
@@ -44,17 +65,36 @@
             "strokeWidth": 1.5
           },
           "encoding": {
-            "longitude": {"field": "lon", "type": "quantitative"},
-            "latitude": {"field": "lat", "type": "quantitative"},
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
             "size": {
               "field": "value_m",
               "type": "quantitative",
-              "scale": {"domain": [0, 1200], "range": [0, 4200]},
+              "scale": {
+                "domain": [
+                  0,
+                  1200
+                ],
+                "range": [
+                  0,
+                  4200
+                ]
+              },
               "legend": {
                 "title": "Value, $ million",
                 "orient": "top-left",
                 "direction": "vertical",
-                "values": [250, 500, 1000],
+                "values": [
+                  250,
+                  500,
+                  1000
+                ],
                 "titleColor": "#26382F",
                 "titleFontWeight": 600,
                 "labelColor": "#535C56",
@@ -65,56 +105,115 @@
               }
             },
             "tooltip": [
-              {"field": "state", "title": "State"},
-              {"field": "value_m", "type": "quantitative", "title": "Value ($ million)", "format": ",.1f"}
+              {
+                "field": "state",
+                "title": "State"
+              },
+              {
+                "field": "value_m",
+                "type": "quantitative",
+                "title": "Value ($ million)",
+                "format": ",.1f"
+              }
             ]
           }
         },
         {
           "description": "Not-published states: dashed outline only, never filled, so they cannot be read as zero.",
           "transform": [
-            {"filter": "!datum.is_pub"},
-            {"calculate": "'Not published by the ABS (confidential)'", "as": "why"}
+            {
+              "filter": "!datum.is_pub"
+            },
+            {
+              "calculate": "'Not published by the ABS (confidential)'",
+              "as": "why"
+            }
           ],
           "mark": {
             "type": "circle",
             "size": 600,
             "fill": null,
             "stroke": "#8D958F",
-            "strokeDash": [3, 3],
+            "strokeDash": [
+              3,
+              3
+            ],
             "strokeWidth": 1.5
           },
           "encoding": {
-            "longitude": {"field": "lon", "type": "quantitative"},
-            "latitude": {"field": "lat", "type": "quantitative"},
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
             "tooltip": [
-              {"field": "state", "title": "State"},
-              {"field": "why", "title": "Value"}
+              {
+                "field": "state",
+                "title": "State"
+              },
+              {
+                "field": "why",
+                "title": "Value"
+              }
             ]
           }
         },
         {
           "description": "State abbreviation.",
-          "mark": {"type": "text", "fontSize": 12, "fontWeight": 700, "dy": -5},
+          "mark": {
+            "type": "text",
+            "fontSize": 12,
+            "fontWeight": 700,
+            "dy": -5
+          },
           "encoding": {
-            "longitude": {"field": "lon", "type": "quantitative"},
-            "latitude": {"field": "lat", "type": "quantitative"},
-            "text": {"field": "abbr"},
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "abbr"
+            },
             "color": {
-              "condition": {"test": "datum.is_pub", "value": "white"},
+              "condition": {
+                "test": "datum.is_pub",
+                "value": "white"
+              },
               "value": "#535C56"
             }
           }
         },
         {
           "description": "Value label, or 'Not published'.",
-          "mark": {"type": "text", "fontSize": 11, "dy": 9},
+          "mark": {
+            "type": "text",
+            "fontSize": 11,
+            "dy": 9
+          },
           "encoding": {
-            "longitude": {"field": "lon", "type": "quantitative"},
-            "latitude": {"field": "lat", "type": "quantitative"},
-            "text": {"field": "label"},
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "label"
+            },
             "color": {
-              "condition": {"test": "datum.is_pub", "value": "white"},
+              "condition": {
+                "test": "datum.is_pub",
+                "value": "white"
+              },
               "value": "#535C56"
             }
           }
@@ -125,7 +224,11 @@
       "description": "Separate legend key for missing data, placed in the ocean south-west of WA, close to the map.",
       "data": {
         "values": [
-          {"lon": 114.2, "lat": -38.4, "text": "Not published (confidential, not zero)"}
+          {
+            "lon": 114.2,
+            "lat": -38.4,
+            "text": "Not published (confidential, not zero)"
+          }
         ]
       },
       "layer": [
@@ -135,26 +238,51 @@
             "size": 220,
             "fill": null,
             "stroke": "#8D958F",
-            "strokeDash": [3, 3],
+            "strokeDash": [
+              3,
+              3
+            ],
             "strokeWidth": 1.5
           },
           "encoding": {
-            "longitude": {"field": "lon", "type": "quantitative"},
-            "latitude": {"field": "lat", "type": "quantitative"}
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            }
           }
         },
         {
-          "mark": {"type": "text", "align": "left", "dx": 14, "fontSize": 11, "color": "#535C56"},
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "dx": 14,
+            "fontSize": 11,
+            "color": "#535C56"
+          },
           "encoding": {
-            "longitude": {"field": "lon", "type": "quantitative"},
-            "latitude": {"field": "lat", "type": "quantitative"},
-            "text": {"field": "text"}
+            "longitude": {
+              "field": "lon",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "lat",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "text"
+            }
           }
         }
       ]
     }
   ],
   "config": {
-    "view": {"stroke": null}
+    "view": {
+      "stroke": null
+    }
   }
 }

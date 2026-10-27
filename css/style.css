@@ -85,7 +85,7 @@ h3 { font-size: 1.375rem; font-weight: 600; letter-spacing: -0.005em; }         
 }
 .kicker { font-family: var(--font-head); font-weight: 600; color: var(--frame-gold); margin: 0 0 0.75rem; }
 .deck {
-  font-family: "Bricolage Grotesque", sans-serif;
+  font-family: var(--font-body);
   font-size: clamp(1.15rem, 2vw, 1.35rem);
   line-height: 1.55;
   max-width: var(--prose-width);
@@ -185,12 +185,25 @@ h3 { font-size: 1.375rem; font-weight: 600; letter-spacing: -0.005em; }         
 .chart-notes .prose { margin-bottom: 1rem; }
 .note { font-size: 0.92rem; line-height: 1.55; color: var(--muted); margin: 0; }
 
+/* Two maps side by side. Each card's four parts — title, sub-title,
+   chart, caption — share the same four rows, so the two columns line up
+   even when one title or sub-title is longer than the other. */
 .chart-pair {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1.5rem, 4vw, 2.5rem);
+  grid-template-rows: auto auto auto auto;
+  column-gap: clamp(1.5rem, 4vw, 2.5rem);
+  row-gap: 0;
   align-items: start;
 }
+.chart-pair .chart-card {
+  display: grid;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  margin: 0;
+}
+.chart-pair .chart { align-self: start; }
 
 /* ---------- Callout and pull quote ---------- */
 .callout {
@@ -258,4 +271,7 @@ a:hover { text-decoration-thickness: 2px; }
 @media (max-width: 760px) {
   .chart-row, .chart-row--wide, .chart-pair, .takeaway-grid, .footer-grid, .key-stats { grid-template-columns: 1fr; }
   .definitions { grid-template-columns: 1fr; }
+  /* stack the paired cards normally, one under the other */
+  .chart-pair { grid-template-rows: none; row-gap: var(--chart-gap); }
+  .chart-pair .chart-card { display: block; grid-row: auto; }
 }
